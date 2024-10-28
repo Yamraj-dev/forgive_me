@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm Sorry</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f0e68c, #f9c2c2);
+            text-align: center;
+            transition: background-color 0.5s, color 0.5s;
+        }
+        h1 {
+            color: #4A4A4A;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        p {
+            color: #555;
+            margin: 10px 0;
+            font-size: 1.2rem;
+        }
+        .emojis {
+            font-size: 2.5rem;
+        }
+        .forgive-button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .forgive-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .forgiven-message {
+            display: none;
+            color: #333;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+    <!-- Include EmailJS library -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        (function(){
+            emailjs.init("slLWRtkNi6l4ZxAn8"); // Replace with your EmailJS User ID
+        })();
+    </script>
+</head>
+<body>
+    <h1>I'm Really Sorry</h1>
+    <p>I know I may have been rude, and that was never my intention.</p>
+    <p class="emojis">😢 💔 🙏</p>
+    <p>Please forgive me. I truly regret my actions.</p>
+    
+    <audio id="sad-song" loop>
+        <source src="./WhatsApp Audio 2024-10-28 at 20.42.56_6065ced0.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <button class="forgive-button" onclick="forgiveMe()">Forgive Me</button>
+
+    <div class="forgiven-message" id="forgiven-message" style="display: none;">
+        <p>Thank you for forgiving me! 😊</p>
+        <p class="emojis">❤️ 🎉 🎈</p>
+        <p>I’m so grateful for this chance to make things right.</p>
+        <audio id="happy-song">
+            <source src="./WhatsApp Audio 2024-10-28 at 20.51.41_45c74f92.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Play the sad song as soon as the page loads
+            var sadSong = document.getElementById("sad-song");
+            sadSong.play().catch(function(error) {
+                console.log("Audio playback failed:", error);
+            });
+        };
+
+        function forgiveMe() {
+            // Send email notification
+            emailjs.send("service_y75mamj", "template_38vhmb7", {
+                message: "She has pressed the 'Forgive Me' button!"
+            }).then(function(response) {
+                console.log("Email successfully sent!", response.status, response.text);
+            }, function(error) {
+                console.log("Failed to send email", error);
+            });
+
+            // Change page appearance and content
+            document.getElementById("sad-song").pause();
+            document.body.style.backgroundColor = "#d0e6f2";  // Change background color for a happy mood
+            document.querySelector("h1").textContent = "Thank You!";
+            document.querySelector(".forgive-button").style.display = "none";  // Hide the forgive button
+            document.getElementById("forgiven-message").style.display = "block";  // Show the forgiven message
+
+            // Play the happy song
+            var happySong = document.getElementById("happy-song");
+            happySong.play().catch(function(error) {
+                console.log("Happy song playback failed:", error);
+            });
+        }
+    </script>
+</body>
+</html>
